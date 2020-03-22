@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>第三章-函数作用域和块作用域 | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="你不知道的JavaScript,读书笔记">
+    <meta name="description" content="函数中的作用域">
+<meta name="keywords" content="你不知道的JavaScript,读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第三章-函数作用域和块作用域">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="函数中的作用域">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fuvjonv48wj20vr0ast9v.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fuve94tkubj205q08iaaa.jpg">
+<meta property="og:updated_time" content="2018-09-09T09:34:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第三章-函数作用域和块作用域">
+<meta name="twitter:description" content="函数中的作用域">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fuvjonv48wj20vr0ast9v.jpg">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">第三章-函数作用域和块作用域</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">第三章-函数作用域和块作用域</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-09-02T14:11:46.000Z" itemprop="datePublished" class="page-time">
+  2018-09-02
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#函数中的作用域"><span class="post-toc-number">1.</span> <span class="post-toc-text">函数中的作用域</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#隐藏内部实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">隐藏内部实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#规避冲突"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">规避冲突</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#全局命名空间"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">全局命名空间</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#模块管理"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">模块管理</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#函数作用域"><span class="post-toc-number">3.</span> <span class="post-toc-text">函数作用域</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#匿名和具名"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">匿名和具名</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#立即执行函数"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">立即执行函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#块作用域"><span class="post-toc-number">4.</span> <span class="post-toc-text">块作用域</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#with"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">with</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#try-catch"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">try/catch</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#let"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">let</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#垃圾收集"><span class="post-toc-number">4.3.1.</span> <span class="post-toc-text">垃圾收集</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#let循环"><span class="post-toc-number">4.3.2.</span> <span class="post-toc-text">let循环</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#const"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">const</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="youdtkonwjs-youdtkonwjs/dkjs-chapter-3"
+  class="post-article article-type-youdtkonwjs fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">第三章-函数作用域和块作用域</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-09-02 22:11:46" datetime="2018-09-02T14:11:46.000Z"  itemprop="datePublished">2018-09-02</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/80676d79gy1fuvjonv48wj20vr0ast9v.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h3 id="函数中的作用域"><a href="#函数中的作用域" class="headerlink" title="函数中的作用域"></a>函数中的作用域</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/80676d79gy1fuve94tkubj205q08iaaa.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>在这个代码片段中，f(…)的作用域气泡包含了y、g、z。无论标识符声明出现在作用域中的何处，这个标识符所代表的变量或者函数都将附属于所处作用域的气泡。</p>
+<p>其中 g(…)拥有自己的作用域气泡，而全局作用域也有自己的作用域气泡。所以有无法从f(…)的外部（全局作用域）对它们进行访问。</p>
+<p>函数作用域的含义：属于这个函数的全部变量都可以在整个函数的范围（嵌套的作用域也可以）内使用</p>
+<h3 id="隐藏内部实现"><a href="#隐藏内部实现" class="headerlink" title="隐藏内部实现"></a>隐藏内部实现</h3><p>作用域隐藏的方法也叫最小授权或最小暴露原则。这个原则是指在软件设计中，应该最小限度地暴露必要内容，而将其他内容隐藏起来。<br>如下代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    b = a + doSomethingElse(a*<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(b)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomethingElse</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">doSomething(<span class="number">2</span>); <span class="comment">// 15</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doSomethingElse</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> b;</span><br><span class="line">    b = a + doSomethingElse(a*<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(b*<span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line">doSomething(<span class="number">2</span>); <span class="comment">// 15</span></span><br></pre></td></tr></table></figure>
+<p>最小暴露原则的具体体现就是第二段代码。第一段代码虽然能实现字面上的功能，但也相比第二段代码会容易得到非预期的结果，所以最小隐藏原则提倡的就是设计上将具体内容私有化了。</p>
+<h4 id="规避冲突"><a href="#规避冲突" class="headerlink" title="规避冲突"></a>规避冲突</h4><p>隐藏作用域中的变量和函数所带来的另一个好处就是可以避免同名标识符之间的冲突。同名的话就会产生上一章提到的遮蔽效应。</p>
+<h5 id="全局命名空间"><a href="#全局命名空间" class="headerlink" title="全局命名空间"></a>全局命名空间</h5><p>变量中途的典型例子就是在引入第三方库的时候，库没有封装好就有可能与你的全局作用域中的标识符冲突。</p>
+<h5 id="模块管理"><a href="#模块管理" class="headerlink" title="模块管理"></a>模块管理</h5><p>另一个解决冲突的办法就是模块管理。像es6的import/export一样 会有独立的作用域不会污染到本地全局作用域。</p>
+<h3 id="函数作用域"><a href="#函数作用域" class="headerlink" title="函数作用域"></a>函数作用域</h3><p>思考如下代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// 3</span></span><br><span class="line">&#125;</span><br><span class="line">foo();</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>这个是函数声明。</li>
+<li>这个是个具名函数并且处于全局作用域。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// 3</span></span><br><span class="line">&#125;)();</span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>这个是函数表达式。</li>
+<li>这个是匿名函数。</li>
+<li>(function foo(){…})作为函数表达式，foo只能在{…}所代表的位置被访问，外部作用域不行。</li>
+</ol>
+<p>如果function是声明中的第一个词，那么就是一个函数声明，否则就是一个函数表达式。<br>函数声明和函数表达式之间最重要的区别就是它们的名称标识符将会绑定在哪。</p>
+<h4 id="匿名和具名"><a href="#匿名和具名" class="headerlink" title="匿名和具名"></a>匿名和具名</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'123'</span>);</span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<p>这应该就是最熟悉的函数表达式了。函数表达式可以试匿名的，函数声明则不可以省略函数名。</p>
+<p><strong>匿名函数表达式的缺点：</strong></p>
+<ol>
+<li>错误不好追踪。</li>
+<li>无法高效调用自身。</li>
+<li>可读性/可理解性 不好。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(<span class="function"><span class="keyword">function</span> <span class="title">timeoutHandler</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'123'</span>);</span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>行内函数表达式</strong>就能很好解决匿名函数的缺点。</p>
+<h4 id="立即执行函数"><a href="#立即执行函数" class="headerlink" title="立即执行函数"></a>立即执行函数</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">global</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">    <span class="built_in">console</span>.log(a); <span class="comment">// 3</span></span><br><span class="line">    <span class="built_in">console</span>.log(global.a); <span class="comment">// 2</span></span><br><span class="line">&#125;)(<span class="built_in">window</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>这个也是个很常见的模式啦。函数被包含在第一个()里变成了函数表达式，第二个()执行了这个函数。<br>同时也可以传入一个参数。</p>
+<h3 id="块作用域"><a href="#块作用域" class="headerlink" title="块作用域"></a>块作用域</h3><p>函数作用域是最常见的作用域单元，但其他类型的作用域单元也是存在的。例如：块作用域。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这就就是很明显的块作用域。但是var 变量声明时绑定在全局作用域的。</p>
+<h4 id="with"><a href="#with" class="headerlink" title="with"></a>with</h4><p>with是从对象中创建出来的作用域仅在with声明中而非外部作用域中有效。</p>
+<h4 id="try-catch"><a href="#try-catch" class="headerlink" title="try/catch"></a>try/catch</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    undefinded()</span><br><span class="line">&#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中在catch(…)中声明的变量只能在catch(){…}这个块作用域中有效。</p>
+<h4 id="let"><a href="#let" class="headerlink" title="let"></a>let</h4><p>let 是es6的语法，是一个新的声明变量的语法。let可以将变量绑定到任意作用域中（通常是{..}内部）。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">if</span>(foo)&#123;</span><br><span class="line">    <span class="keyword">let</span> bar = foo*<span class="number">2</span>;</span><br><span class="line">    bar = something(bar);</span><br><span class="line">    <span class="built_in">console</span>.log(bar);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(bar) <span class="comment">// ReferenceError</span></span><br></pre></td></tr></table></figure>
+<p>可以看出在一个块作用域外访问let声明的变量是会报错的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(bar); <span class="comment">// ReferenceError!</span></span><br><span class="line">    <span class="keyword">let</span> bar = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用let 声明的变量不存在变量提升的情况。</p>
+<h5 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h5><p>有效的创建块作用域有助于提交性能，因为在形成闭包的时候js引擎的垃圾回收机制会忽略掉。</p>
+<h5 id="let循环"><a href="#let循环" class="headerlink" title="let循环"></a>let循环</h5><p>上文提到的var循环声明的变量会污染全局，也有可能会导致意料之外的结果。<br>那么：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i&lt;<span class="number">10</span>;i++)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>let 循环则能够很好的讲i绑定到for循环中，并且保证使用上一次循环迭代结束的时候重新进行赋值。</p>
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>const 同样是es6的值 作用与let类似但是其值是固定的。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">if</span>(foo)&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">const</span> b = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    a = <span class="number">3</span>; <span class="comment">// 正常</span></span><br><span class="line">    b = <span class="number">4</span>; <span class="comment">// 错误</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 3</span></span><br><span class="line"><span class="built_in">console</span>.log(b); <span class="comment">// ReferenceError</span></span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-09-09T09:34:55.000Z" itemprop="dateUpdated">2018-09-09 17:34:55</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/&title=《第三章-函数作用域和块作用域》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/&title=《第三章-函数作用域和块作用域》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第三章-函数作用域和块作用域》 — pok&url=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/09/youdtkonwjs/dkjs-chepter-4/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">第四章-提升</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/22/youdtkonwjs/dkjs-chapter-2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">第二章-词法作用域</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/&title=《第三章-函数作用域和块作用域》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/&title=《第三章-函数作用域和块作用域》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第三章-函数作用域和块作用域》 — pok&url=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2018/09/02/youdtkonwjs/dkjs-chapter-3/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

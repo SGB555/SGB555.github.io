@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>第六章-对象 | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="你不知道的JavaScript,读书笔记">
+    <meta name="description" content="语法对象可以通过两种形式定义：声明（文字）形式和构造形式12345678// 声明（文字）形式var myObj = &amp;#123;     key: value    ...&amp;#125;">
+<meta name="keywords" content="你不知道的JavaScript,读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第六章-对象">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="语法对象可以通过两种形式定义：声明（文字）形式和构造形式12345678// 声明（文字）形式var myObj = &amp;#123;     key: value    ...&amp;#125;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fwrh4wl53aj20kw0dhq3x.jpg">
+<meta property="og:updated_time" content="2018-11-12T14:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第六章-对象">
+<meta name="twitter:description" content="语法对象可以通过两种形式定义：声明（文字）形式和构造形式12345678// 声明（文字）形式var myObj = &amp;#123;     key: value    ...&amp;#125;">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fwrh4wl53aj20kw0dhq3x.jpg">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">第六章-对象</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">第六章-对象</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-10-31T08:12:44.000Z" itemprop="datePublished" class="page-time">
+  2018-10-31
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#语法"><span class="post-toc-number">1.</span> <span class="post-toc-text">语法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类型"><span class="post-toc-number">2.</span> <span class="post-toc-text">类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#内置对象"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">内置对象</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内容"><span class="post-toc-number">3.</span> <span class="post-toc-text">内容</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#可计算属性名"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">可计算属性名</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#属性与方法"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">属性与方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#数组"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">数组</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#复制对象"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">复制对象</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#属性描述符"><span class="post-toc-number">3.5.</span> <span class="post-toc-text">属性描述符</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#不变性"><span class="post-toc-number">3.6.</span> <span class="post-toc-text">不变性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Get"><span class="post-toc-number">3.7.</span> <span class="post-toc-text">[[Get]]</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Put"><span class="post-toc-number">3.8.</span> <span class="post-toc-text">[[Put]]</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Getter和Setter"><span class="post-toc-number">3.9.</span> <span class="post-toc-text">Getter和Setter</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#存在性"><span class="post-toc-number">3.10.</span> <span class="post-toc-text">存在性</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#遍历"><span class="post-toc-number">3.11.</span> <span class="post-toc-text">遍历</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="youdtkonwjs-youdtkonwjs/dkjs-chapter-7"
+  class="post-article article-type-youdtkonwjs fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">第六章-对象</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-10-31 16:12:44" datetime="2018-10-31T08:12:44.000Z"  itemprop="datePublished">2018-10-31</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/80676d79gy1fwrh4wl53aj20kw0dhq3x.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>对象可以通过两种形式定义：声明（文字）形式和构造形式<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明（文字）形式</span></span><br><span class="line"><span class="keyword">var</span> myObj = &#123; </span><br><span class="line">    key: value</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 构造形式</span></span><br><span class="line"><span class="keyword">var</span> myObj = <span class="keyword">new</span> <span class="built_in">Object</span>(); </span><br><span class="line">myObj.key = value;</span><br></pre></td></tr></table></figure></p>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><p>6中主要类型（简单基本类型）：</p>
+<ul>
+<li>string</li>
+<li>number</li>
+<li>boolean</li>
+<li>null </li>
+<li>undefinded</li>
+<li>object</li>
+</ul>
+<p><strong>注意:</strong>简单基本类型本身不是对象。 typeof null 返回“object” 实际上是JS这个语言的BUG。</p>
+<p>原理是不同的对象在底层表示为二进制，在JS中二进制前三位都为0的话就会被判为object类型，null的二进制表示全是0，所以typeof null 返回“object”</p>
+<p>有一种常见的错误说法是“JavaScript 中万物皆是对象”，这显然是错误的。<br>实际上，JavaScript 中有许多特殊的对象子类型，我们可以称之为复杂基本类型。</p>
+<h4 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h4><ul>
+<li>String</li>
+<li>Number</li>
+<li>Boolean</li>
+<li>Object</li>
+<li>Function</li>
+<li>Array</li>
+<li>Date</li>
+<li>RegExp</li>
+<li>Error</li>
+</ul>
+<p>这些内置对象就类似于其他语言的class，如Java中的String class。</p>
+<p>但是在JS中，它们实际上只是一些内置函数。这些内置函数可以当做构造函数使用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> strPrimitive = <span class="string">"I am a string"</span>; </span><br><span class="line"><span class="keyword">typeof</span> strPrimitive; <span class="comment">// "string" </span></span><br><span class="line">strPrimitive <span class="keyword">instanceof</span> <span class="built_in">String</span>; <span class="comment">// false</span></span><br><span class="line"><span class="keyword">var</span> strObject = <span class="keyword">new</span> <span class="built_in">String</span>( <span class="string">"I am a string"</span> ); </span><br><span class="line"><span class="keyword">typeof</span> strObject; <span class="comment">// "object"</span></span><br><span class="line">strObject <span class="keyword">instanceof</span> <span class="built_in">String</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>“I am a string”只是个字面量，如果需要获取长度、访问等等就需要转为String对象。而JS会自动把字符串字面量转换成一个String对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> strPrimitive = <span class="string">"I am a string"</span>;</span><br><span class="line"><span class="built_in">console</span>.log( strPrimitive.length ); <span class="comment">// 13</span></span><br><span class="line"><span class="built_in">console</span>.log( strPrimitive.charAt( <span class="number">3</span> ) ); <span class="comment">// "m"</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意:</strong></p>
+<ol>
+<li>null和undefined没有对应的构造形式，只有文字形式。</li>
+<li>Date只有构造，没有文字形式。</li>
+<li>Object，Array，Function，RegExp，无论文字还是构造，它们都是对象，不是字面量。</li>
+<li>Error对象很少显式创建，一般在异常的时候自动创建。</li>
+</ol>
+<h3 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h3><p>当我们说“内容”的时候，好像在暗示这些值就存储在对象内部，但其实这只是它的表现形式。存储在对象内部的只是这些属性的名称。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123; <span class="attr">a</span>:<span class="number">2</span>&#125;;</span><br><span class="line">     myObject.a; <span class="comment">// 2</span></span><br><span class="line">     myObject[<span class="string">"a"</span>]; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>如果要访问属性，我们可以使用点操作符（.）或者中括号操作符([])。<br>在对象中，属性名永远都是字符串。如果你用字符串之外的值作为key，那它首先会被转换为一个字符串。</p>
+<h4 id="可计算属性名"><a href="#可计算属性名" class="headerlink" title="可计算属性名"></a>可计算属性名</h4><p>如果你需要通过表达式来计算属性名，那么我们刚刚讲到的 myObject[..] 这种属性访问语 法就可以派上用场了，如可以使用myObject[prefix + name]。<br>ES6 增加了可计算属性名，可以在文字形式中使用 [] 包裹一个表达式来当作属性名:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> prefix = <span class="string">"foo"</span>;</span><br><span class="line"><span class="keyword">var</span> myObject = &#123;</span><br><span class="line">    [prefix + <span class="string">"bar"</span>]: <span class="string">"hello"</span>,</span><br><span class="line">    [prefix + <span class="string">"baz"</span>]: <span class="string">"world"</span></span><br><span class="line">&#125;;</span><br><span class="line">     myObject[<span class="string">"foobar"</span>]; <span class="comment">// hello</span></span><br><span class="line">     myObject[<span class="string">"foobaz"</span>]; <span class="comment">// world</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="属性与方法"><a href="#属性与方法" class="headerlink" title="属性与方法"></a>属性与方法</h4><p>在其他语言中，属于对象的函数通常被称为方法，但是在JS中函数永远不会属于一个对象。因为无论返回值是什么类型，每次访问对象的属性就是属性访问。即使有些函数具有this引用，但是this是根据调用位置动态绑定的。<br>举例来说:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log( <span class="string">"foo"</span> );</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> someFoo = foo; <span class="comment">// 对 foo 的变量引用</span></span><br><span class="line"><span class="keyword">var</span> myObject = &#123; <span class="attr">someFoo</span>: foo</span><br><span class="line">&#125;;</span><br><span class="line">foo; <span class="comment">// function foo()&#123;..&#125;</span></span><br><span class="line">someFoo; <span class="comment">// function foo()&#123;..&#125; </span></span><br><span class="line">myObject.someFoo; <span class="comment">// function foo()&#123;..&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>someFoo 和 myObject.someFoo 只是对于同一个函数的不同引用，并不能说明这个函数是特别的或者“属于”某个对象。</p>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><p>数组也是对象，你可以给数组添加属性：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArray = [ <span class="string">"foo"</span>, <span class="number">42</span>, <span class="string">"bar"</span> ]; </span><br><span class="line">myArray.baz = <span class="string">"baz"</span>; </span><br><span class="line">myArray.length; <span class="comment">// 3</span></span><br><span class="line">myArray.baz; <span class="comment">// "baz"</span></span><br></pre></td></tr></table></figure></p>
+<p>可以看到虽然添加了命名属性(无论是通过 . 语法还是 [] 语法)，数组的 length 值并未发生变化。</p>
+<h4 id="复制对象"><a href="#复制对象" class="headerlink" title="复制对象"></a>复制对象</h4><p>var newObj = JSON.parse( JSON.stringify( someObj ) );</p>
+<p>var newObj = Object.assign( {}, myObject );</p>
+<h4 id="属性描述符"><a href="#属性描述符" class="headerlink" title="属性描述符"></a>属性描述符</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123; <span class="attr">a</span>:<span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">Object</span>.getOwnPropertyDescriptor( myObject, <span class="string">"a"</span> ); </span><br><span class="line"><span class="comment">//&#123;</span></span><br><span class="line"><span class="comment">// value: 2,</span></span><br><span class="line"><span class="comment">// writable: true,</span></span><br><span class="line"><span class="comment">// enumerable: true,</span></span><br><span class="line"><span class="comment">// configurable: true </span></span><br><span class="line"><span class="comment">//&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这个普通的对象属性对应的属性描述符(也被称为“数据描述符”，因为它 只保存一个数据值)可不仅仅只是一个 2。它还包含另外三个特性:writable(可写)、 enumerable(可枚举)和 configurable(可配置)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123;&#125;;</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty( myObject, <span class="string">"a"</span>, &#123;</span><br><span class="line">        value: <span class="number">2</span>,</span><br><span class="line">        writable: <span class="literal">true</span>, </span><br><span class="line">        configurable: <span class="literal">true</span>, </span><br><span class="line">        enumerable: <span class="literal">true</span></span><br><span class="line">&#125;);</span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<p>我们使用 defineProperty(..) 给 myObject 添加了一个普通的属性并显式指定了一些特性。 然而，一般来说你不会使用这种方式，除非你想修改属性描述符。</p>
+<ol>
+<li>writable<br>writable 决定是否可以修改属性的值。</li>
+<li>Configurable<br>是否可以配置属性<br>把 configurable 修改成 false 是单向操作，无法撤销!<br>要注意有一个小小的例外:即便属性是 configurable:false，我们还是可以 把 writable 的状态由 true 改为 false，但是无法由 false 改为 true。</li>
+<li>Enumerable<br>是否可以遍历到<br>如果为false则会在遍历中跳过这个属性。</li>
+</ol>
+<h4 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h4><p>通常来说我们都是不需要冻结对象的，如果有需要用到，那就得重新思考一下程序的设计了。<br>很重要的一点是，所有的方法创建的都是浅不变形，也就是说，它们只会影响目标对象和 它的直接属性。如果目标对象引用了其他对象(数组、对象、函数，等)，其他对象的内 容不受影响，仍然是可变的。</p>
+<p>有以下几种方法实现对象的不变性。</p>
+<ol>
+<li>结合 writable:false 和 configurable:false 就可以创建一个真正的常量属性(不可修改、 重定义或者删除)。</li>
+<li>Object.preventExtensions( myObject ); 在非严格模式下，创建属性 b 会静默失败。在严格模式下，将会抛出 TypeError 错误。</li>
+<li>Object.seal(..) 会创建一个“密封”的对象，这个方法实际上会在一个现有对象上调用 Object.preventExtensions(..) 并把所有现有属性标记为 configurable:false。</li>
+<li>Object.freeze(..) 会创建一个冻结对象，这个方法实际上会在一个现有对象上调用 Object.seal(..) 并把所有“数据访问”属性标记为 writable:false，这样就无法修改它们 的值。</li>
+</ol>
+<h4 id="Get"><a href="#Get" class="headerlink" title="[[Get]]"></a>[[Get]]</h4><p>当我们访问对象属性的时候，实际上是执行了[[Get]]操作。对象默认的内置[[Get]]操作首先会在对象中查找是否有名称相同的属性，如果没有则会循环原型链去寻找。最后还是没有的话返回undefined。</p>
+<h4 id="Put"><a href="#Put" class="headerlink" title="[[Put]]"></a>[[Put]]</h4><p>[[Put]]被触发的时候，取决于很多因素，其中最重要的是对象中是否存在这个属性。<br>如果存在，则会进行下面的操作。</p>
+<ol>
+<li>属性是否存在访问描述符也就是setter、getter</li>
+<li>属性的数据描述符中的writable是否false，是的话，非严格模式下静默失败，严格模式下抛出typeError异常。</li>
+<li>如果都不是则将该值设为属性的值。</li>
+</ol>
+<h4 id="Getter和Setter"><a href="#Getter和Setter" class="headerlink" title="Getter和Setter"></a>Getter和Setter</h4><p>getter和setter部分改写默认操作，但是这只能应用在单个属性上，无法应用在整个对象中。<br>getter是一个隐藏函数，会在获取属性值时调用。<br>setter也是一个隐藏函数，在设置属性值的时调用。</p>
+<p>如果有getter和setter或者两者之一，就会忽略它们的value和writable。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123;</span><br><span class="line"><span class="comment">// 给 a 定义一个 getter </span></span><br><span class="line">    get a() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">2</span>; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Object</span>.defineProperty&#123;</span><br><span class="line">    myObject,</span><br><span class="line">    <span class="string">"b"</span>,</span><br><span class="line">    &#123;</span><br><span class="line">        get()&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.a * <span class="number">2</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        enumerable: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">myObject.a; <span class="comment">// 2</span></span><br><span class="line">myObject.b; <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<p>无论是文字语法还是显式定义，二者都会创建一个不含值的属性，访问这个属性的时候就会调用getter。</p>
+<p>如果只有getter，对属性复制的操作会被忽略。</p>
+<p>合理的写法是getter和setter成对出现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myObject = &#123;</span><br><span class="line"><span class="comment">// 给 a 定义一个 getter </span></span><br><span class="line">    get a() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>._a_; </span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 给 a 定义一个 setter </span></span><br><span class="line">    set a(val) &#123;</span><br><span class="line">        <span class="keyword">this</span>._a_ = val * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">    myObject.a = <span class="number">2</span>;</span><br><span class="line">    myObject.a; <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+<h4 id="存在性"><a href="#存在性" class="headerlink" title="存在性"></a>存在性</h4><p>in 和 hasOwnProperty(..) 的区别在于是否查找 [[Prototype]] 链，然而，Object.keys(..) 和 Object.getOwnPropertyNames(..) 都只会查找对象直接包含的属性。</p>
+<h4 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h4><p>你可以使用 ES6 的 for..of 语法来遍历数据结构(数组、对象，等等)中的值，for..of 会寻找内置或者自定义的 @@iterator 对象并调用它的 next() 方法来遍历数据值。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-11-12T14:14:51.000Z" itemprop="dateUpdated">2018-11-12 22:14:51</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/&title=《第六章-对象》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/&title=《第六章-对象》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第六章-对象》 — pok&url=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/11/12/youdtkonwjs/dkjs-chapter-8/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">第八章-混合对象“类”</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/10/17/youdtkonwjs/dkjs-chapter-6/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">第六章-this全面解析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/&title=《第六章-对象》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/&title=《第六章-对象》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第六章-对象》 — pok&url=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2018/10/31/youdtkonwjs/dkjs-chapter-7/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

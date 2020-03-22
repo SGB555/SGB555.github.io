@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>第八章-混合对象“类” | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="你不知道的JavaScript,读书笔记">
+    <meta name="description" content="类理论面向对象编程强调的是数据和操作数据的行为本质上是相关关联的（当然，不同的数据有不同的行为），因此好的设计就是把数据以及它相关的行为打包或者说封装起来。 比如字符串，字符串是数据，而">
+<meta name="keywords" content="你不知道的JavaScript,读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第八章-混合对象“类”">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="类理论面向对象编程强调的是数据和操作数据的行为本质上是相关关联的（当然，不同的数据有不同的行为），因此好的设计就是把数据以及它相关的行为打包或者说封装起来。 比如字符串，字符串是数据，而">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fx7zuv75uaj20h905k3z2.jpg">
+<meta property="og:updated_time" content="2019-01-03T13:48:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第八章-混合对象“类”">
+<meta name="twitter:description" content="类理论面向对象编程强调的是数据和操作数据的行为本质上是相关关联的（当然，不同的数据有不同的行为），因此好的设计就是把数据以及它相关的行为打包或者说封装起来。 比如字符串，字符串是数据，而">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fx7zuv75uaj20h905k3z2.jpg">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">第八章-混合对象“类”</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">第八章-混合对象“类”</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-11-12T14:15:51.000Z" itemprop="datePublished" class="page-time">
+  2018-11-12
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类理论"><span class="post-toc-number">1.</span> <span class="post-toc-text">类理论</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#“类”设计模式"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">“类”设计模式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#JS中的“类”"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">JS中的“类”</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#类机制"><span class="post-toc-number">2.</span> <span class="post-toc-text">类机制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#建造"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">建造</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#构造函数"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">构造函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#类的继承"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">类的继承</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#多态"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">多态</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#多重继承"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">多重继承</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#混入"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">混入</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="youdtkonwjs-youdtkonwjs/dkjs-chapter-8"
+  class="post-article article-type-youdtkonwjs fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">第八章-混合对象“类”</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-11-12 22:15:51" datetime="2018-11-12T14:15:51.000Z"  itemprop="datePublished">2018-11-12</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/80676d79gy1fx7zuv75uaj20h905k3z2.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h3 id="类理论"><a href="#类理论" class="headerlink" title="类理论"></a>类理论</h3><p>面向对象编程强调的是数据和操作数据的行为本质上是相关关联的（当然，不同的数据有不同的行为），因此好的设计就是把数据以及它相关的行为打包或者说封装起来。</p>
+<p>比如字符串，字符串是数据，而应用在这种数据上的行为（计算长度，添加数据，搜索等等）都会被设计成String类的方法。而字符串就是String类的一个实例。</p>
+<p>再比如我们定义一个vehicle类和car类，vehicle可能包含了引擎，载人能力等，而car则会继承vehicle类的属性。</p>
+<h4 id="“类”设计模式"><a href="#“类”设计模式" class="headerlink" title="“类”设计模式"></a>“类”设计模式</h4><p>在软件设计中有很多面向类的设计模型，比如观察者模式，工厂模式，单例模式等等，也有函数式编程，面向过程编程。</p>
+<h4 id="JS中的“类”"><a href="#JS中的“类”" class="headerlink" title="JS中的“类”"></a>JS中的“类”</h4><p>JS中没有类，有近似类的语法，es6中的类只是语法糖。</p>
+<h3 id="类机制"><a href="#类机制" class="headerlink" title="类机制"></a>类机制</h3><p>在许多面向类的语言中，“标准库”会提供 Stack 类，它是一种“栈”数据结构(支持压 入、弹出，等等)。Stack 类内部会有一些变量来存储数据，同时会提供一些公有的可访问 行为(“方法”)，从而让你的代码可以和(隐藏的)数据进行交互(比如添加、删除数据)。<br>但是在这些语言中，你实际上并不是直接操作 Stack(除非创建一个静态类成员引用，这 超出了我们的讨论范围)。Stack 类仅仅是一个抽象的表示，它描述了所有“栈”需要做的 事，但是它本身并不是一个“栈”。你必须先实例化 Stack 类然后才能对它进行操作。</p>
+<h4 id="建造"><a href="#建造" class="headerlink" title="建造"></a>建造</h4><p>一个类就是一张蓝图。为了获得真正可以交互的对象，我们必须按照类来建造(也可以说 实例化)一个东西，这个东西通常被称为实例，有需要的话，我们可以直接在实例上调用 方法并访问其所有公有数据属性。</p>
+<p>这个对象就是类中描述的所有特性的一份副本。</p>
+<p>你通常也不会使用一个实例对象来直接访问并操作它的类，不过至少可以 判断出这个实例对象来自哪个类。</p>
+<h4 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h4><p>类实例是由一个特殊的类方法构造的，这个方法名通常和类名相同，被称为构造函数。这个方法的任务就是初始化实例需要的所有信息。</p>
+<p>注意，类通常有一个同名构造函数，执行时实际上调用的就是同名构造函数。构造函数会返回一个对象(也就是类的一个实例)，之后我们可以在这个对象上调用 类的 方法，来输出指定的值或数据。</p>
+<h4 id="类的继承"><a href="#类的继承" class="headerlink" title="类的继承"></a>类的继承</h4><p>在面向类的语言中，你可以先定义一个类，然后定义一个继承前者的类。后者通常被称为“子类”，前者通常被称为“父类”。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 伪代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">    engines = <span class="number">1</span></span><br><span class="line">    ignition() &#123;</span><br><span class="line">        output( <span class="string">"Turning on my engine."</span> );</span><br><span class="line">    &#125;</span><br><span class="line">    drive() &#123;</span><br><span class="line">        ignition();</span><br><span class="line">        output( <span class="string">"Steering and moving forward!"</span> )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span> <span class="title">inherits</span> <span class="title">Vehicle</span> </span>&#123; </span><br><span class="line">    wheels = <span class="number">4</span></span><br><span class="line">    drive() &#123;</span><br><span class="line">        inherited:drive()</span><br><span class="line">        output( <span class="string">"Rolling on all "</span>, wheels, <span class="string">" wheels!"</span> )</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SpeedBoat</span> <span class="title">inherits</span> <span class="title">Vehicle</span> </span>&#123; </span><br><span class="line">    engines = <span class="number">2</span></span><br><span class="line">    ignition() &#123;</span><br><span class="line">        output( <span class="string">"Turning on my "</span>, engines, <span class="string">" engines."</span> )</span><br><span class="line">    &#125;</span><br><span class="line">    pilot() &#123;</span><br><span class="line">        inherited:drive()</span><br><span class="line">        output( <span class="string">"Speeding through the water with ease!"</span> )</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h5><p>重写了继承至父类的方法，同时也可以引用继承来的原始方法，这个技术被称为多态或者虚拟多态。</p>
+<p>在许多语言中可以使用super来表示当前类的父类/祖先类。<br>多态的另一个方面是，在继承链的不同层次中一个方法名可以被多次定义，当调用方法时会自动选择合适的定义。</p>
+<ol>
+<li>传统的面向类语言中，子类构造函数可以通过super调用父类的构造函数</li>
+<li>真正的类来说，构造函数属于类，但是在JS中，类属于构造函数</li>
+</ol>
+<p>子类得到的仅仅是继承至父类行为的一份副本。子类对继承到的一个方法进行‘重写’，不会影响到父类中的方法，这两个方法互不影响，因此才能使用相对多态引用访问父类中的方法（如果重写会影响父类的方法，那重写之后父类中的原始方法就不存在了，自然无法引用）</p>
+<p>多态并不表示子类和父类有关联，子类得到的只是父类的一份副本。类的继承其实就是复制。</p>
+<p>多态（在继承链的不同层次名称相同但是功能不同的函数）看起来似乎是从子类引用父类，但是本质上引用的其实是复制的结果。</p>
+<h5 id="多重继承"><a href="#多重继承" class="headerlink" title="多重继承"></a>多重继承</h5><p>从表面上来，对于类来说这似乎是一个非常有用的功能，可以把许多功能组合在一起。然 而，这个机制同时也会带来很多复杂的问题。如果两个父类中都定义了 drive() 方法的话， 子类引用的是哪个呢?难道每次都需要手动指定具体父类的 drive() 方法吗?这样多态继 承的很多优点就存在了。</p>
+<h4 id="混入"><a href="#混入" class="headerlink" title="混入"></a>混入</h4><p>在继承或实例化时，JS的对象机制并不会自动执行复制行为。简单来说，JS中只有对象，并不存在可以被实例化的‘类’。一个对象并不会被复制到其他对象，它们会被关联起来。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-01-03T13:48:22.000Z" itemprop="dateUpdated">2019-01-03 21:48:22</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/&title=《第八章-混合对象“类”》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/&title=《第八章-混合对象“类”》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第八章-混合对象“类”》 — pok&url=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/11/22/web/tcp-ip/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">HTTP相关知识、TCP三次握手&amp;四次分手</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/10/31/youdtkonwjs/dkjs-chapter-7/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">第六章-对象</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/&title=《第八章-混合对象“类”》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/&title=《第八章-混合对象“类”》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第八章-混合对象“类”》 — pok&url=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2018/11/12/youdtkonwjs/dkjs-chapter-8/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

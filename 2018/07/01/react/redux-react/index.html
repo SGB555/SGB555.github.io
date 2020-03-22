@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>redux-react | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="redux">
+    <meta name="description" content="拆分react-redux将所有组件分成2类：UI组件，容器组件，  UI组件是无逻辑通过参数(props)渲染的组件 容器组件就是用于传递参数、数据  ==React-Redux 规定，所有的 UI 组件都由用户提供，容器组件则是由 React-Redux 自动生成。也就是说，用户负责视觉层，状态管理则是全部交给它。== 1.connect用于从UI组件生成容器组件。12import &amp;#123">
+<meta name="keywords" content="redux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redux-react">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2018/07/01/react/redux-react/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="拆分react-redux将所有组件分成2类：UI组件，容器组件，  UI组件是无逻辑通过参数(props)渲染的组件 容器组件就是用于传递参数、数据  ==React-Redux 规定，所有的 UI 组件都由用户提供，容器组件则是由 React-Redux 自动生成。也就是说，用户负责视觉层，状态管理则是全部交给它。== 1.connect用于从UI组件生成容器组件。12import &amp;#123">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-02T14:13:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redux-react">
+<meta name="twitter:description" content="拆分react-redux将所有组件分成2类：UI组件，容器组件，  UI组件是无逻辑通过参数(props)渲染的组件 容器组件就是用于传递参数、数据  ==React-Redux 规定，所有的 UI 组件都由用户提供，容器组件则是由 React-Redux 自动生成。也就是说，用户负责视觉层，状态管理则是全部交给它。== 1.connect用于从UI组件生成容器组件。12import &amp;#123">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">redux-react</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">redux-react</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-01T09:38:36.000Z" itemprop="datePublished" class="page-time">
+  2018-07-01
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#拆分"><span class="post-toc-number">1.</span> <span class="post-toc-text">拆分</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-connect"><span class="post-toc-number">2.</span> <span class="post-toc-text">1.connect</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1mapStateToProps"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1.1mapStateToProps()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-mapDispatchToProps"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">1.2 mapDispatchToProps()</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-组件"><span class="post-toc-number">3.</span> <span class="post-toc-text">2. 组件</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-用装饰器的方式写connect"><span class="post-toc-number">4.</span> <span class="post-toc-text">3. 用装饰器的方式写connect</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="react-react/redux-react"
+  class="post-article article-type-react fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">redux-react</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-01 17:38:36" datetime="2018-07-01T09:38:36.000Z"  itemprop="datePublished">2018-07-01</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="拆分"><a href="#拆分" class="headerlink" title="拆分"></a>拆分</h1><p>react-redux将所有组件分成2类：UI组件，容器组件，</p>
+<ol>
+<li>UI组件是无逻辑通过参数(props)渲染的组件</li>
+<li>容器组件就是用于传递参数、数据</li>
+</ol>
+<p>==React-Redux 规定，所有的 UI 组件都由用户提供，容器组件则是由 React-Redux 自动生成。也就是说，用户负责视觉层，状态管理则是全部交给它。==</p>
+<h1 id="1-connect"><a href="#1-connect" class="headerlink" title="1.connect"></a>1.connect</h1><p>用于从UI组件生成容器组件。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect()(TodoList);</span><br></pre></td></tr></table></figure></p>
+<p>TodoList是UI组件，VisibleTodoList就是由connect方法自助生成的容器组件。</p>
+<p>connect方法的完整API：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; connect &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> VisibleTodoList = connect(</span><br><span class="line">  mapStateToProps,</span><br><span class="line">  mapDispatchToProps</span><br><span class="line">)(TodoList)</span><br></pre></td></tr></table></figure></p>
+<p>有两个参数：mapStateToProps和mapDispatchToProps。前者负责输入逻辑，就是将state映射到UI组件的props，后者负责输出逻辑，也就是action。</p>
+<h2 id="1-1mapStateToProps"><a href="#1-1mapStateToProps" class="headerlink" title="1.1mapStateToProps()"></a>1.1mapStateToProps()</h2><p>作为函数，执行后返回的是一个对象，对象里的每一个键值对就是一个映射。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getVisibleTodos = <span class="function">(<span class="params">todos,filter</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">switch</span>(filter)&#123;</span><br><span class="line">        <span class="keyword">case</span><span class="string">'SHOW_ALL'</span>:</span><br><span class="line">            <span class="keyword">return</span> todos</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'SHOW_COMPLETED'</span>:</span><br><span class="line">            <span class="keyword">return</span> todos.filter(<span class="function"><span class="params">t</span>=&gt;</span>t.completed)</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'SHOW_ACTIVED'</span>:</span><br><span class="line">            <span class="keyword">return</span> todos.filter(<span class="function"><span class="params">t</span>=&gt;</span>!t.completed)</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">`Unkown filter:<span class="subst">$&#123;filter&#125;</span>`</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> mapStateToProps = <span class="function">(<span class="params">state</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        todos:getVisibleTodos(state.todos,state.visibilityFilter)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>mapStateToProps 会订阅Store，每当state更新的时候，就会自动执行，重新渲染。</p>
+<p>mapStateToProps 有两个参数（state，ownProps）</p>
+<p>使用ownProps作为参数后，如果容器组件的参数发生变化，也会引发 UI 组件重新渲染。</p>
+<p>connect方法可以省略mapStateToProps参数，那样的话，UI 组件就不会订阅Store，就是说 Store 的更新不会引起 UI 组件的更新。</p>
+<h2 id="1-2-mapDispatchToProps"><a href="#1-2-mapDispatchToProps" class="headerlink" title="1.2 mapDispatchToProps()"></a>1.2 mapDispatchToProps()</h2><p>用于建立UI组件的参数到Store.dispatch方法的映射。可以是函数或者对象。</p>
+<p>如果是函数，会得到两个参数dispatch和ownProps 两个参数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mapDispatchToProps =<span class="function">(<span class="params">disptach,ownProps</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        onClick:<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">            dispatch(&#123;</span><br><span class="line">                type:<span class="string">'123'</span>,</span><br><span class="line">                filter:ownProps.filter</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是对象的话，每个键值对都是函数。</p>
+<h1 id="2-组件"><a href="#2-组件" class="headerlink" title="2. 组件"></a>2. <provider>组件</provider></h1><p>connect 用于生成容器组件，而provider则能让UI组件拿到数据。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Provider &#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"><span class="keyword">import</span> todoApp <span class="keyword">from</span> <span class="string">'./reducers'</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./components/App'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成Store</span></span><br><span class="line"><span class="keyword">let</span> store = createStore(todoApp);</span><br><span class="line"></span><br><span class="line">render(</span><br><span class="line">    <span class="comment">//传入数据(Store) 那么APP的子组件都是通过this.props获取到数据Ï</span></span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;<span class="regexp">/Provider&gt;,</span></span><br><span class="line"><span class="regexp">  document.getElementById('root')</span></span><br><span class="line"><span class="regexp">)</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="3-用装饰器的方式写connect"><a href="#3-用装饰器的方式写connect" class="headerlink" title="3. 用装饰器的方式写connect"></a>3. 用装饰器的方式写connect</h1><p>首先需要babel插件：==babel-plugin-transform-decorators-legacy==</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i babel-plugin-transform-decorators-legacy --s</span><br></pre></td></tr></table></figure>
+<p>在文件中如下使用<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;connect&#125; <span class="keyword">from</span> <span class="string">'react-redux'</span></span><br><span class="line"></span><br><span class="line">@connect(</span><br><span class="line">	<span class="comment">// 你要state什么属性放到props里</span></span><br><span class="line">	<span class="comment">// 也就是mapStateToProps()</span></span><br><span class="line">	state=&gt;(&#123;<span class="attr">num</span>:state.counter&#125;),</span><br><span class="line">	<span class="comment">// 你要什么方法，放到props里，自动dispatch</span></span><br><span class="line">	<span class="comment">// 也就是mapDispatchToProps()</span></span><br><span class="line">	&#123; addGun, removeGun, addGunAsync &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-09-02T14:13:45.000Z" itemprop="dateUpdated">2018-09-02 22:13:45</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redux/">redux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/&title=《redux-react》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/&title=《redux-react》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《redux-react》 — pok&url=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/22/youdtkonwjs/dkjs-chapter-2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">第二章-词法作用域</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/07/01/node/blog/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">从零开发web server博客项目</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/&title=《redux-react》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/&title=《redux-react》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《redux-react》 — pok&url=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2018/07/01/react/redux-react/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

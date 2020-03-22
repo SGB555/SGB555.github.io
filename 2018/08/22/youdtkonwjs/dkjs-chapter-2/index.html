@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>第二章-词法作用域 | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="你不知道的JavaScript,读书笔记">
+    <meta name="description" content="刚完成第一章读书笔记之后。。紧接着就是连续的996 公事私事加起来导致很久没有写读书笔记，趁着最近不忙就赶紧补上 定义：作用域主要有两种。第一种是较为普遍的词法作用域也是JS采用的作用域模型；第二种是动态作用域。">
+<meta name="keywords" content="你不知道的JavaScript,读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第二章-词法作用域">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="刚完成第一章读书笔记之后。。紧接着就是连续的996 公事私事加起来导致很久没有写读书笔记，趁着最近不忙就赶紧补上 定义：作用域主要有两种。第一种是较为普遍的词法作用域也是JS采用的作用域模型；第二种是动态作用域。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fung4zi1vcj21a104qt9o.jpg">
+<meta property="og:updated_time" content="2018-11-21T09:52:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第二章-词法作用域">
+<meta name="twitter:description" content="刚完成第一章读书笔记之后。。紧接着就是连续的996 公事私事加起来导致很久没有写读书笔记，趁着最近不忙就赶紧补上 定义：作用域主要有两种。第一种是较为普遍的词法作用域也是JS采用的作用域模型；第二种是动态作用域。">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fung4zi1vcj21a104qt9o.jpg">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">第二章-词法作用域</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">第二章-词法作用域</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-21T16:00:00.000Z" itemprop="datePublished" class="page-time">
+  2018-08-22
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#词法阶段"><span class="post-toc-number">1.</span> <span class="post-toc-text">词法阶段</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查找"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">查找</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#欺骗词法"><span class="post-toc-number">2.</span> <span class="post-toc-text">欺骗词法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#eval"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">eval</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#with"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">with</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#性能"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">性能</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="youdtkonwjs-youdtkonwjs/dkjs-chapter-2"
+  class="post-article article-type-youdtkonwjs fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">第二章-词法作用域</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-22 00:00:00" datetime="2018-08-21T16:00:00.000Z"  itemprop="datePublished">2018-08-22</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>刚完成第一章读书笔记之后。。紧接着就是连续的996 公事私事加起来导致很久没有写读书笔记，趁着最近不忙就赶紧补上</p>
+<p>定义：作用域主要有两种。第一种是较为普遍的词法作用域也是JS采用的作用域模型；第二种是动态作用域。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/80676d79gy1fung4zi1vcj21a104qt9o.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><strong>内容:</strong></p>
+<ol>
+<li>词法阶段</li>
+<li>欺骗词法</li>
+</ol>
+<h3 id="词法阶段"><a href="#词法阶段" class="headerlink" title="词法阶段"></a>词法阶段</h3><p>第 1 章介绍过，大部分标准语言编译器的第一个工作阶段叫作词法化(也叫单词化)。回 忆一下，词法化的过程会对源代码中的字符进行检查，如果是有状态的解析过程，还会赋 予单词语义。</p>
+<p>简单地说，词法作用域就是定义在词法阶段的作用域。换句话说，词法作用域是由你在写 代码时将变量和块作用域写在哪里来决定的，因此当词法分析器处理代码时会保持作用域 不变(大部分情况下是这样的)。</p>
+<h4 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h4><p>作用域查找会在找到第一个匹配的标识符时停止。<br>作用域查找始终是从运行时所处的最内部作用域开始，逐级向外或者说向上进行，直到遇见第一个匹配的标识符为止。</p>
+<p>无论函数在哪里被调用，也无论它如何被调用，它的词法作用域都只是由函数被声明时所处的位置决定的</p>
+<p>词法作用域查找只会查找一级标识符。如果代码中引用了foo.bar.baz 词法作用域查找只会找到foo，之后的查找就会被对象属性访问规则接管。</p>
+<h3 id="欺骗词法"><a href="#欺骗词法" class="headerlink" title="欺骗词法"></a>欺骗词法</h3><p>JS中有两种机制来实现欺骗词法，重要的是 <strong>欺骗词法作用域会导致性能下降</strong></p>
+<h4 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h4><p>eval() 是全局对象的一个函数属性。</p>
+<p>eval() 的参数是一个字符串。如果字符串表示的是表达式，eval() 会对表达式进行求值。如果参数表示一个或多个 JavaScript 语句， 那么 eval() 就会执行这些语句。注意不要用 eval() 来执行一个算术表达式；</p>
+<p>例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">str,a</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">eval</span>(str); <span class="comment">// 欺骗</span></span><br><span class="line">    <span class="built_in">console</span>.log(a,b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line">foo(<span class="string">'var b = =3'</span>,<span class="number">1</span>); <span class="comment">// 1,3</span></span><br></pre></td></tr></table></figure></p>
+<p>由于eval(…)调用的代码声明了一个新的变量b,因此它对已经存在的词法作用域进行了修改。实际上就是，在foo(…)中创建了一个变量b把全局作用域的变量b遮蔽了<br>非严格模式下才能执行上述代码。</p>
+<h4 id="with"><a href="#with" class="headerlink" title="with"></a>with</h4><p>with通常被当作重复引用同一个对象的多个属性的快捷方式，可以不需要重复引用对象本身。<br>例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj =&#123;</span><br><span class="line">    a:<span class="number">1</span>,</span><br><span class="line">    b:<span class="number">2</span>,</span><br><span class="line">    c:<span class="number">3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">obj.a = <span class="number">2</span>;</span><br><span class="line">obj.b = <span class="number">3</span>;</span><br><span class="line">obj.c = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span>(obj)&#123;</span><br><span class="line">    a = <span class="number">2</span>;</span><br><span class="line">    b = <span class="number">3</span>; </span><br><span class="line">    c = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们写的代码看起来只是对变量a的简单引用，实际上是一个LHS引用。当函数作用域以及全局作用域都没有查找到要引用的值时，就会创建一个全局变量，这样就改变了我们本来的目的（非严格模式）。</p>
+<h4 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h4><p>JS引擎在便器阶段会进行性能优化。而优化依赖于代码的词法静态分析，而以上两种机制就会导致无法预测从而放弃了优化。所以请不要使用它们</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-11-21T09:52:10.000Z" itemprop="dateUpdated">2018-11-21 17:52:10</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/&title=《第二章-词法作用域》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/&title=《第二章-词法作用域》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第二章-词法作用域》 — pok&url=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/02/youdtkonwjs/dkjs-chapter-3/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">第三章-函数作用域和块作用域</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/07/01/react/redux-react/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">redux-react</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/&title=《第二章-词法作用域》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/&title=《第二章-词法作用域》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第二章-词法作用域》 — pok&url=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2018/08/22/youdtkonwjs/dkjs-chapter-2/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

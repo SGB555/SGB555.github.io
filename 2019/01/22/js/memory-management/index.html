@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>JS内存管理（垃圾回收机制） | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="JS">
+    <meta name="description" content="前言内存管理的主要目的就是在需要时系统动态的分配内存，不需要时把分配出去的内存再回收回来。JS创建变量时就会分配内存，并且在不使用时”自动释放“。释放这一过程就叫垃圾回收。 内存生命周期 分配所需内存 对内存进行读写操作 不需时释放/归还  大多数内存管理的问题都在释放阶段，高级语言嵌入了”垃圾回收器“用于跟踪内存的分配和使用，以便分配的内存不再使用时，自动释放。 垃圾回收垃圾回收算法主要依赖引用">
+<meta name="keywords" content="JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS内存管理（垃圾回收机制）">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2019/01/22/js/memory-management/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="前言内存管理的主要目的就是在需要时系统动态的分配内存，不需要时把分配出去的内存再回收回来。JS创建变量时就会分配内存，并且在不使用时”自动释放“。释放这一过程就叫垃圾回收。 内存生命周期 分配所需内存 对内存进行读写操作 不需时释放/归还  大多数内存管理的问题都在释放阶段，高级语言嵌入了”垃圾回收器“用于跟踪内存的分配和使用，以便分配的内存不再使用时，自动释放。 垃圾回收垃圾回收算法主要依赖引用">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s2.ax1x.com/2019/01/22/kkCgBD.png">
+<meta property="og:updated_time" content="2019-01-23T14:27:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS内存管理（垃圾回收机制）">
+<meta name="twitter:description" content="前言内存管理的主要目的就是在需要时系统动态的分配内存，不需要时把分配出去的内存再回收回来。JS创建变量时就会分配内存，并且在不使用时”自动释放“。释放这一过程就叫垃圾回收。 内存生命周期 分配所需内存 对内存进行读写操作 不需时释放/归还  大多数内存管理的问题都在释放阶段，高级语言嵌入了”垃圾回收器“用于跟踪内存的分配和使用，以便分配的内存不再使用时，自动释放。 垃圾回收垃圾回收算法主要依赖引用">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/01/22/kkCgBD.png">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">JS内存管理（垃圾回收机制）</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">JS内存管理（垃圾回收机制）</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-22T03:35:09.000Z" itemprop="datePublished" class="page-time">
+  2019-01-22
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#内存生命周期"><span class="post-toc-number">2.</span> <span class="post-toc-text">内存生命周期</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#垃圾回收"><span class="post-toc-number">3.</span> <span class="post-toc-text">垃圾回收</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#标记-清除算法"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">标记-清除算法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#标记清除算法的缺点"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">标记清除算法的缺点</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-js/memory-management"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">JS内存管理（垃圾回收机制）</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-22 11:35:09" datetime="2019-01-22T03:35:09.000Z"  itemprop="datePublished">2019-01-22</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>内存管理的主要目的就是在需要时系统动态的分配内存，不需要时把分配出去的内存再回收回来。<br>JS创建变量时就会分配内存，并且在不使用时”自动释放“。释放这一过程就叫垃圾回收。</p>
+<h3 id="内存生命周期"><a href="#内存生命周期" class="headerlink" title="内存生命周期"></a>内存生命周期</h3><ol>
+<li>分配所需内存</li>
+<li>对内存进行读写操作</li>
+<li>不需时释放/归还</li>
+</ol>
+<p>大多数内存管理的问题都在释放阶段，高级语言嵌入了”垃圾回收器“用于跟踪内存的分配和使用，以便分配的内存不再使用时，自动释放。</p>
+<h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><p>垃圾回收算法主要依赖引用的概念。在内存管理的环境中，一个对象如果有访问另一个对象的权限（隐式或显式），叫做一个对象引用另一个对象。</p>
+<p>简单来说，分配好内存的对象被引用后一般情况下不会被回收。<br>在这里，对象的概念不仅指JS对象，还包括函数作用域或全局词法作用域。</p>
+<p>当前最基本的垃圾回收算法有四种：</p>
+<ol>
+<li>标记-清除算法</li>
+<li>标记-压缩算法</li>
+<li>复制算法</li>
+<li>引用计数算法</li>
+</ol>
+<p>根据MDN文档所示，2012年起所有的现代浏览器使用了标记-清除垃圾回收算法。所有对JS垃圾回收算法的改进都是基于标记-清除算法改进的。</p>
+<h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>标记清除算法从名称上看，可以拆分为两部分：标记和清除。</p>
+<ul>
+<li>标记阶段<br>在此阶段，垃圾回收器会从应用程序根对象（JS中，根是全局对象）开始遍历，每个从根对象访问到的对象都会添加一个标识，于是这个对象就被标识为可到达对象。</li>
+<li>清除阶段<br>在此阶段，垃圾回收器会对堆内存从头到尾进行线性遍历，发现没有标记的对象则将此对象占用的内存回收。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/01/22/kkCgBD.png" alt="kkCgBD.png" title="">
+                </div>
+                <div class="image-caption">kkCgBD.png</div>
+            </figure>
+<p>在使用标记清除算法时，未引用对象并不会被立即回收，而是垃圾对象将累计到内存耗尽为止，当内存耗尽时，程序会被挂起，垃圾回收开始执行。</p>
+<h4 id="标记清除算法的缺点"><a href="#标记清除算法的缺点" class="headerlink" title="标记清除算法的缺点"></a>标记清除算法的缺点</h4><ol>
+<li>垃圾收集后有可能会造成大量的内存碎片，像上面的图片所示，垃圾收集后内存中存在三个内存碎片，假设一个方格代表1个单位的内存，如果有一个对象需要占用3个内存单位的话，那么就会导致Mutator一直处于暂停状态，而Collector一直在尝试进行垃圾收集，直到Out of Memory。</li>
+<li>那些无法从根对象查询到的对象都将被清除。尽管这是一个限制，但实践中我们很少会碰到类似的情况，所以开发者不太会去关心垃圾回收机制。</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-01-23T14:27:18.000Z" itemprop="dateUpdated">2019-01-23 22:27:18</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JS/">JS</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/&title=《JS内存管理（垃圾回收机制）》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/&title=《JS内存管理（垃圾回收机制）》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS内存管理（垃圾回收机制）》 — pok&url=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2020/02/01/typescript/index/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">初识typescript</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/01/14/youdtkonwjs/dkjs-chapter-9/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">第九章-原型链</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/&title=《JS内存管理（垃圾回收机制）》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/&title=《JS内存管理（垃圾回收机制）》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《JS内存管理（垃圾回收机制）》 — pok&url=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2019/01/22/js/memory-management/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

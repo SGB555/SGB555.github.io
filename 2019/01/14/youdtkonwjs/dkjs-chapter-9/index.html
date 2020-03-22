@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>第九章-原型链 | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="你不知道的JavaScript,读书笔记">
+    <meta name="description" content="[[Prototype]]在几乎所有的对象创建时都会有[[Prototype]]属性（非空），它是JS对象中内置的特殊属性，其实就是对其他对象的引用。 有什么用呢？在你试图引用对象的属性">
+<meta name="keywords" content="你不知道的JavaScript,读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第九章-原型链">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="[[Prototype]]在几乎所有的对象创建时都会有[[Prototype]]属性（非空），它是JS对象中内置的特殊属性，其实就是对其他对象的引用。 有什么用呢？在你试图引用对象的属性">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fz7ovhzfqaj20t40abwff.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/01/23/kV4vwV.png">
+<meta property="og:updated_time" content="2019-02-03T07:50:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第九章-原型链">
+<meta name="twitter:description" content="[[Prototype]]在几乎所有的对象创建时都会有[[Prototype]]属性（非空），它是JS对象中内置的特殊属性，其实就是对其他对象的引用。 有什么用呢？在你试图引用对象的属性">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fz7ovhzfqaj20t40abwff.jpg">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">第九章-原型链</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">第九章-原型链</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-01-14T11:45:42.000Z" itemprop="datePublished" class="page-time">
+  2019-01-14
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Prototype"><span class="post-toc-number">1.</span> <span class="post-toc-text">[[Prototype]]</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Object-prototype"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Object.prototype</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#属性设置和屏蔽"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">属性设置和屏蔽</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#“类”"><span class="post-toc-number">2.</span> <span class="post-toc-text">“类”</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#“类”函数"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">“类”函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#关于名称"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">关于名称</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#“构造函数”"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">“构造函数”</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#constructor属性"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">.constructor属性</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#（原型）继承"><span class="post-toc-number">3.</span> <span class="post-toc-text">（原型）继承</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#检查“类”关键"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">检查“类”关键</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#对象关联"><span class="post-toc-number">4.</span> <span class="post-toc-text">对象关联</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#创建关联"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">创建关联</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="youdtkonwjs-youdtkonwjs/dkjs-chapter-9"
+  class="post-article article-type-youdtkonwjs fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">第九章-原型链</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-01-14 19:45:42" datetime="2019-01-14T11:45:42.000Z"  itemprop="datePublished">2019-01-14</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/80676d79gy1fz7ovhzfqaj20t40abwff.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h3 id="Prototype"><a href="#Prototype" class="headerlink" title="[[Prototype]]"></a>[[Prototype]]</h3><p>在几乎所有的对象创建时都会有[[Prototype]]属性（非空），它是JS对象中内置的特殊属性，其实就是对其他对象的引用。</p>
+<p>有什么用呢？在你试图引用对象的属性时会触发[[Get]]操作，比如myObject.a。对于默认的[[Get]]操作，第一步就是检查对象本身是否有这个属性，否则就会查找对象的[[Prototype]]链了。<br>这个过程会持续直到找到匹配的属性，如果查找完整的[[prototype]]链后还是没有则返回undefined。</p>
+<h4 id="Object-prototype"><a href="#Object-prototype" class="headerlink" title="Object.prototype"></a>Object.prototype</h4><p>所有普通的[[prototype]]链最终都会指向内置的Object.prototype。它包含JS中许多通用功能：.toString()和.valueOf()等等。</p>
+<h4 id="属性设置和屏蔽"><a href="#属性设置和屏蔽" class="headerlink" title="属性设置和屏蔽"></a>属性设置和屏蔽</h4><p>给一个对象设置属性并不是仅仅添加一个新值那么简单。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">myObject.foo = <span class="string">'bar'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>如果myObject对象中包含名为foo的普通数据访问属性，这条赋值语句只会修改已有的属性值。</p>
+<ul>
+<li>如果foo不在myObject对象中，就会遍历[[prototype]]链，原型链上没有foo则直接添加到myObject上。</li>
+<li>如果foo既出现在myObject中也出现在原型链上，那么就会发生屏蔽。myObject中的foo会屏蔽原型链中的foo，因为myObject.foo总是会选择原型链中最底层的foo属性</li>
+<li>如果foo存在原型链上会有以下几种情况：<ol>
+<li>如果存在原型链上且没有被标为只读，就会添加到myObject中，它是<strong>屏蔽属性</strong>。</li>
+<li>如果存在原型链上而且是只读，如果运行在严格模式下，代码会抛出错误。否则，会被忽略。</li>
+<li>如果在原型链上存在foo且是一个setter，那么就会调用setter，而不会添加到myObject，也不会重新定义setter。</li>
+</ol>
+</li>
+</ul>
+<p>如果你想在第二、第三种情况下也能添加foo属性，那就得用Object.defineProperty()。</p>
+<h3 id="“类”"><a href="#“类”" class="headerlink" title="“类”"></a>“类”</h3><p>现在你可能会很好奇:为什么一个对象需要关联到另一个对象?这样做有什么好处?<br>但是在回答之前我们首先要理解 [[Prototype]]“不是”什么。<br>JavaScript 和面向类的语言不同，它并没有类来作为对象的抽象模式或者说蓝图。JavaScript 中只有对象。<br>实际上，JavaScript 才是真正应该被称为“面向对象”的语言，因为它是少有的可以不通过类，直接创建对象的语言。<br>在 JavaScript 中，类无法描述对象的行为，(因为根本就不存在类!)对象直接定义自己的行为。<br>再说一遍，JavaScript 中只有对象。</p>
+<h4 id="“类”函数"><a href="#“类”函数" class="headerlink" title="“类”函数"></a>“类”函数</h4><p>所有的函数默认都会拥有一个名为prototype的公有并且不可枚举的属性，指向另一个对象：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Foo.prototype;</span><br></pre></td></tr></table></figure></p>
+<p>这个对象被称为Foo的原型。</p>
+<p>最直接的解释就是，这个对象是在调用new Foo()时创建的，最后会被关联到这个“Foo点prototype”对象上。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="built_in">Object</span>.getPrototypeOf(a) === Foo.prototypr; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>调用new Foo()时会创建a，其中一步就是给a一个内部的[[prototype]]链接，关联到Foo.prototype指向的那个对象。</p>
+<p>使用new来调用函数，会执行下面操作：</p>
+<ol>
+<li>创建（或者说构造）一个全新的对象。</li>
+<li>这个对象会被执行[[Prototype]]连接。</li>
+<li>这个新对象会绑定到函数调用的this。</li>
+<li>如果函数没有返回对象，那么new表达式中的函数调用会自动返回这个新对象。</li>
+</ol>
+<p>在面向类的语言中，类可以复制或实例化多次，但是在JS中并没有类似的复制机制。new Foo()会生成一个新对象，这个新对象的内部链接[[prototype]]关联的是Foo.prototype对象。最后我们得到两个对象，它们之间互相关联。实际上我们没有从“类”中复制任何行为到一个对象中，只是让两个对象互相关联。</p>
+<h4 id="关于名称"><a href="#关于名称" class="headerlink" title="关于名称"></a>关于名称</h4><p>在JS中我们并不会把一个对象（类）复制到另一个对象（实例），只是将它们关联起来。<br>这个机制通常称为<strong>原型继承</strong>。</p>
+<p>“继承”这个词很容易让人误会，令人无法区分JS的关联对象和类继承几乎完全相反的行为。</p>
+<p>继承意味着复制操作，JS默认并不会复制对象属性。只会在两个对象之间创建关联，这样一个对象就可以通过<strong>委托</strong>访问另一个对象的属性和函数。</p>
+<h4 id="“构造函数”"><a href="#“构造函数”" class="headerlink" title="“构造函数”"></a>“构造函数”</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br></pre></td></tr></table></figure>
+<p>是什么让我们认识Foo是一个类呢？</p>
+<ol>
+<li>看到关键字new，在面向类的语言中构造实例会用到new。</li>
+<li>看起来我们执行了类的构造函数，Foo()。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">Foo.prototype.constructor === Foo; <span class="comment">// true</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Foo();</span><br><span class="line">a.constructor === Foo;<span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>Foo.prototype默认有一个公有且不可枚举的属性.constructor,这个属性引用的是对象关联的函数。</p>
+<p>还有 </p>
+<ol>
+<li>似乎”类“名首字母大写是表示类，但其实对于JS引擎来说用new调用首字母大小写的函数没有任何意义。</li>
+<li>实际上，new会劫持所有普通函数并用构造对象的形式调用它。</li>
+</ol>
+<p>举例：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">NothingSpecial</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Dont't mind me"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> a = <span class="keyword">new</span> NothingSpecial();</span><br><span class="line"><span class="comment">// Dont't mind me</span></span><br><span class="line">a; <span class="comment">//&#123;&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>NothingSpecial只是一个普通函数，但是使用new调用时，它就会构造一个对象并赋值给a。但是NothingSpecial本身并不是一个构造函数。</p>
+<p>换句话说，在JS中”构造函数“就是所有带new的函数调用。<br>函数不是构造函数，但是当且仅当使用new时，函数调用就会变成”构造函数调用“</p>
+<h4 id="constructor属性"><a href="#constructor属性" class="headerlink" title=".constructor属性"></a>.constructor属性</h4><p>之前讨论的.constructor属性，看起来a.constructor === Foo为真意味着a确实有一个指向Foo的.constructor属性。实际上，.constructor同样被委托给了Foo.prototype，而Foo.prototype.constructor默认指向Foo。</p>
+<p>因此而认为a是有Foo构造是不合理的，因为a.constructor是通过原型链查找到Foo.constructor而返回的。</p>
+<h3 id="（原型）继承"><a href="#（原型）继承" class="headerlink" title="（原型）继承"></a>（原型）继承</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/01/23/kV4vwV.png" alt="kV4vwV.png" title="">
+                </div>
+                <div class="image-caption">kV4vwV.png</div>
+            </figure>
+<p>图中由下到上的箭头表明委托并不是复制。</p>
+<p>以下代码就是典型的“原型风格”<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Foo.prototype.myName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Bar</span>(<span class="params">name,label</span>)</span>&#123;</span><br><span class="line">    Foo.call(<span class="keyword">this</span>,name);</span><br><span class="line">    <span class="keyword">this</span>.label = label;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 创建了一个新的Bar.prototype对象并且关联到Foo.prototype</span></span><br><span class="line">Bar.prototype = <span class="built_in">Object</span>.create(Foo.prototype);</span><br><span class="line"></span><br><span class="line">Bar.prototype.myLabel = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.label;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> Bar(<span class="string">"a"</span>,<span class="string">"obj a"</span>);</span><br><span class="line">a.myName() <span class="comment">// a</span></span><br><span class="line">a.myLabel() <span class="comment">// obj a</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码的核心就是调用了Object.create(…)会创建一个新对象并把新对象的[[prototype]]关联到你所传入的对象（本例中是Foo.prototype)</p>
+<p><strong>注意：</strong><br>以下两种想要创建关联的方式是错误的：</p>
+<ol>
+<li>Bar.prototype = Foo.prototype</li>
+<li>Bar.prototype = new Foo()</li>
+</ol>
+<p>Bar.prototype = Foo.prototype这样并不会创建一个关联，而是引用了Foo.prototype。所以改变Bar.prototype的属性时，Foo.prototype也会跟着改变。</p>
+<p>Bar.prototype = new Foo()错误的关键在于，Foo()有一些副作用（写日志，修改状态。。。）时就会影响到Bar()的后代。</p>
+<h4 id="检查“类”关键"><a href="#检查“类”关键" class="headerlink" title="检查“类”关键"></a>检查“类”关键</h4><p>在传统的面向类环境中，检查一个实例（JS中的对象）和继承祖先（JS中的委托关联）的关系通常被称为内省（或者反射）。</p>
+<p>有两种方法可以获取关系</p>
+<ol>
+<li>instanceof</li>
+<li>isPrototypeOf()</li>
+</ol>
+<h3 id="对象关联"><a href="#对象关联" class="headerlink" title="对象关联"></a>对象关联</h3><p>现在我们知道了，[[prototype]]机制就是存在于对象中的一个内部链接，它会引用其他对象。</p>
+<p>通常来说，这个链接的作用就是：在某个对象上没有找到需要的属性时，引擎就会继续在[[prototype]]关联的对象上寻找。同理，如果还是没有找到的话，就会在它关联的对象上继续寻找，以此类推。这一系列的对象的链接被称为“原型链”。</p>
+<h4 id="创建关联"><a href="#创建关联" class="headerlink" title="创建关联"></a>创建关联</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">    someting()&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'tell me someting'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar = <span class="built_in">Object</span>.create(foo);</span><br><span class="line"></span><br><span class="line">bar.something(); <span class="comment">// tell me someting</span></span><br></pre></td></tr></table></figure>
+<p>Object.create(…)会创建一个新对象（bar)并把它关联到我们指定的对象（foo)，这样就可以创建原型链的关联。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-02-03T07:50:48.000Z" itemprop="dateUpdated">2019-02-03 15:50:48</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/&title=《第九章-原型链》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/&title=《第九章-原型链》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第九章-原型链》 — pok&url=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/01/22/js/memory-management/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">JS内存管理（垃圾回收机制）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/11/22/web/tcp-ip/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">HTTP相关知识、TCP三次握手&amp;四次分手</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/&title=《第九章-原型链》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/&title=《第九章-原型链》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第九章-原型链》 — pok&url=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2019/01/14/youdtkonwjs/dkjs-chapter-9/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

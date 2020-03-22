@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>redux | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="redux">
+    <meta name="description" content="基本概念1.1 storestore就是保存数据的地方，是一个容器。整个应用只能有一个store而redux提供==createStore==这个函数，用来生成store12import &amp;#123;createStore&amp;#125; from &apos;redux&apos;const store = createStore(fn) createStore接受另一个函数作为参数，返回新的store对象这个参数通常">
+<meta name="keywords" content="redux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="redux">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2018/07/01/react/redux/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="基本概念1.1 storestore就是保存数据的地方，是一个容器。整个应用只能有一个store而redux提供==createStore==这个函数，用来生成store12import &amp;#123;createStore&amp;#125; from &apos;redux&apos;const store = createStore(fn) createStore接受另一个函数作为参数，返回新的store对象这个参数通常">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016091802.jpg">
+<meta property="og:updated_time" content="2018-09-02T14:13:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="redux">
+<meta name="twitter:description" content="基本概念1.1 storestore就是保存数据的地方，是一个容器。整个应用只能有一个store而redux提供==createStore==这个函数，用来生成store12import &amp;#123;createStore&amp;#125; from &apos;redux&apos;const store = createStore(fn) createStore接受另一个函数作为参数，返回新的store对象这个参数通常">
+<meta name="twitter:image" content="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016091802.jpg">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">redux</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">redux</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-07-01T09:37:29.000Z" itemprop="datePublished" class="page-time">
+  2018-07-01
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#基本概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-store"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.1 store</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-state"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">1.2 state</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-action"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">1.3 action</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-4-action-creator"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">1.4 action creator</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-5-store-dispatch"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">1.5 store.dispatch()</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-6-reducer"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">1.6 reducer</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-7-sotre-subscribe"><span class="post-toc-number">1.7.</span> <span class="post-toc-text">1.7 sotre.subscribe()</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#中间件的概念"><span class="post-toc-number">2.</span> <span class="post-toc-text">中间件的概念</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#中间件的用法"><span class="post-toc-number">3.</span> <span class="post-toc-text">中间件的用法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#applyMiddlewares"><span class="post-toc-number">4.</span> <span class="post-toc-text">applyMiddlewares()</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#异步操作的基本思路"><span class="post-toc-number">5.</span> <span class="post-toc-text">异步操作的基本思路</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="react-react/redux"
+  class="post-article article-type-react fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">redux</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-07-01 17:37:29" datetime="2018-07-01T09:37:29.000Z"  itemprop="datePublished">2018-07-01</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><h2 id="1-1-store"><a href="#1-1-store" class="headerlink" title="1.1 store"></a>1.1 store</h2><p>store就是保存数据的地方，是一个容器。整个应用只能有一个store<br>而redux提供==createStore==这个函数，用来生成store<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createStore&#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(fn)</span><br></pre></td></tr></table></figure></p>
+<p>createStore接受另一个函数作为参数，返回新的store对象<br>这个参数通常是reducer</p>
+<h2 id="1-2-state"><a href="#1-2-state" class="headerlink" title="1.2 state"></a>1.2 state</h2><p>==store==对象包含所有数据。==store.getState()==可以拿到当前state的数据<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = store.getState();</span><br></pre></td></tr></table></figure></p>
+<p>redux规定，一个state对应一个view</p>
+<h2 id="1-3-action"><a href="#1-3-action" class="headerlink" title="1.3 action"></a>1.3 action</h2><p>state的变化会导致view的变化，而用户只能接触到view，而action就是view发出的通知，表示state需要改变了。</p>
+<p>action是一个对象，其中==type==属性时必须的，用于识别action。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> action=&#123;</span><br><span class="line">    type:<span class="string">'ADD_TODO'</span>,</span><br><span class="line">    payLoad:<span class="string">'Learn redux'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以这样理解，Action描述当前发生的事情。改变State的唯一办法，就是使用action发布事情，并通过dispatch传递到Store。</p>
+<h2 id="1-4-action-creator"><a href="#1-4-action-creator" class="headerlink" title="1.4 action creator"></a>1.4 action creator</h2><p>通常会用一个函数返回action 这个就叫做action creator（事件创建者）<br>例如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ADD_GUN = <span class="string">'添加枪支'</span>；</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> addGun = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; </span><br><span class="line">        type: ADD_GUN</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="1-5-store-dispatch"><a href="#1-5-store-dispatch" class="headerlink" title="1.5 store.dispatch()"></a>1.5 store.dispatch()</h2><p>这个方法是view 发出action 的唯一办法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createStore&#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"><span class="keyword">const</span> store = createStore();</span><br><span class="line"></span><br><span class="line">store.dispatch(addGun())</span><br></pre></td></tr></table></figure>
+<p>参数通常是action </p>
+<h2 id="1-6-reducer"><a href="#1-6-reducer" class="headerlink" title="1.6 reducer"></a>1.6 reducer</h2><p>在Store接收到action时，必须给出一个新的state，这样view才会发生改变。而这种计算过程就叫reducer。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ADD_GUN = <span class="string">'加机关枪'</span>;</span><br><span class="line"><span class="keyword">const</span> REMOVE_GUN = <span class="string">'减机关枪'</span>;</span><br><span class="line"><span class="comment">// reducer;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> counter = <span class="function">(<span class="params">state = <span class="number">0</span>, action</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">        <span class="keyword">case</span> ADD_GUN:</span><br><span class="line">            <span class="keyword">return</span> state + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">case</span> REMOVE_GUN:</span><br><span class="line">            <span class="keyword">return</span> state - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="1-7-sotre-subscribe"><a href="#1-7-sotre-subscribe" class="headerlink" title="1.7 sotre.subscribe()"></a>1.7 sotre.subscribe()</h2><p>用于监听，一旦state发生变化，就会自动执行这个函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">const</span> store = createStore(reducer);</span><br><span class="line"></span><br><span class="line">store.subscribe(listener);</span><br></pre></td></tr></table></figure>
+<p>只有把（组件的render()或者setState()）放入listen，就会自动渲染</p>
+<p>==store.subscribe==方法返回一个函数，调用这个函数就可以解除监听。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> unsubscribe = store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span></span><br><span class="line">  <span class="built_in">console</span>.log(store.getState())</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">unsubscribe();</span><br></pre></td></tr></table></figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://www.ruanyifeng.com/blogimg/asset/2016/bg2016091802.jpg" alt="image" title="">
+                </div>
+                <div class="image-caption">image</div>
+            </figure>
+<h1 id="中间件的概念"><a href="#中间件的概念" class="headerlink" title="中间件的概念"></a>中间件的概念</h1><p>通常redux都是同步的，如果需要异步操作就需要用到中间件</p>
+<h1 id="中间件的用法"><a href="#中间件的用法" class="headerlink" title="中间件的用法"></a>中间件的用法</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thunk <span class="keyword">from</span> <span class="string">'redux-thunk'</span></span><br><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"><span class="keyword">const</span> store = createStore(counter,</span><br><span class="line">    applyMiddleware(thunk)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>==有的中间件有次序要求，使用前要查一下文档。==</p>
+<h1 id="applyMiddlewares"><a href="#applyMiddlewares" class="headerlink" title="applyMiddlewares()"></a>applyMiddlewares()</h1><p>它是redux的原生方法，作用是将所有中间件组成一个数组，依次执行。</p>
+<h1 id="异步操作的基本思路"><a href="#异步操作的基本思路" class="headerlink" title="异步操作的基本思路"></a>异步操作的基本思路</h1><p>同步操作只要发出一种 Action 即可，异步操作的差别是它要发出三种 Action。</p>
+<ul>
+<li>操作发起时的action</li>
+<li>操作成功时的action</li>
+<li>操作失败时的action</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> addGunAsync = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">dispatch</span> =&gt;</span> &#123;</span><br><span class="line">        dispatch(&#123; <span class="attr">type</span>: <span class="string">'Fetching'</span> &#125;)</span><br><span class="line">        setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            dispatch(addGun())</span><br><span class="line">        &#125;, <span class="number">5000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-09-02T14:13:45.000Z" itemprop="dateUpdated">2018-09-02 22:13:45</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redux/">redux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/07/01/react/redux/&title=《redux》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/07/01/react/redux/&title=《redux》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/07/01/react/redux/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《redux》 — pok&url=http://pok888.gitee.io/blog/2018/07/01/react/redux/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/07/01/react/redux/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/07/01/node/blog/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">从零开发web server博客项目</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/06/24/youdtkonwjs/dkjs-chapter-1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">第一章-作用域是什么</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/07/01/react/redux/&title=《redux》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/07/01/react/redux/&title=《redux》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/07/01/react/redux/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《redux》 — pok&url=http://pok888.gitee.io/blog/2018/07/01/react/redux/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/07/01/react/redux/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2018/07/01/react/redux/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

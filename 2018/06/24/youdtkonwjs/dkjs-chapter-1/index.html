@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>第一章-作用域是什么 | pok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="你不知道的JavaScript,读书笔记">
+    <meta name="description" content="前言：每周为一个时间点记录最近所阅读的《你不知道的JavaScript》章节                                                                                                            内容:  编译原理 理解作用域 作用域嵌套 异常  编译原理以代码片段 var a = 2;为例子 简单了解">
+<meta name="keywords" content="你不知道的JavaScript,读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一章-作用域是什么">
+<meta property="og:url" content="http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/index.html">
+<meta property="og:site_name" content="pok">
+<meta property="og:description" content="前言：每周为一个时间点记录最近所阅读的《你不知道的JavaScript》章节                                                                                                            内容:  编译原理 理解作用域 作用域嵌套 异常  编译原理以代码片段 var a = 2;为例子 简单了解">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fsufvxmmeij217v0ordkw.jpg">
+<meta property="og:updated_time" content="2018-09-02T14:12:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第一章-作用域是什么">
+<meta name="twitter:description" content="前言：每周为一个时间点记录最近所阅读的《你不知道的JavaScript》章节                                                                                                            内容:  编译原理 理解作用域 作用域嵌套 异常  编译原理以代码片段 var a = 2;为例子 简单了解">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/80676d79gy1fsufvxmmeij217v0ordkw.jpg">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">pok shum</h5>
+          <a href="mailto:654351355@qq.com" title="654351355@qq.com" class="mail">654351355@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a class="nav-item" href="https://github.com/SGB555" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">第一章-作用域是什么</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">第一章-作用域是什么</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-06-24T15:41:24.000Z" itemprop="datePublished" class="page-time">
+  2018-06-24
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#编译原理"><span class="post-toc-number">1.</span> <span class="post-toc-text">编译原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#理解作用域"><span class="post-toc-number">2.</span> <span class="post-toc-text">理解作用域</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#编译过程"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">编译过程</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#LHS查询-amp-RHS查询"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">LHS查询&amp;RHS查询</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#作用域嵌套"><span class="post-toc-number">3.</span> <span class="post-toc-text">作用域嵌套</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#异常"><span class="post-toc-number">4.</span> <span class="post-toc-text">异常</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="youdtkonwjs-youdtkonwjs/dkjs-chapter-1"
+  class="post-article article-type-youdtkonwjs fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">第一章-作用域是什么</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-06-24 23:41:24" datetime="2018-06-24T15:41:24.000Z"  itemprop="datePublished">2018-06-24</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>前言：每周为一个时间点记录最近所阅读的《你不知道的JavaScript》章节</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://ws1.sinaimg.cn/large/80676d79gy1fsufvxmmeij217v0ordkw.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p><strong>内容:</strong></p>
+<ol>
+<li>编译原理</li>
+<li>理解作用域</li>
+<li>作用域嵌套</li>
+<li>异常</li>
+</ol>
+<h3 id="编译原理"><a href="#编译原理" class="headerlink" title="编译原理"></a>编译原理</h3><p>以代码片段 var a = 2;为例子 简单了解编译过程</p>
+<ul>
+<li><strong>分词/词法分析（Tokenizing/Lexing)</strong><br>这个过程就会对语句进行拆分成词法单元（Token)：var、a、=、2、；。 空格会否被拆分还要取决于在这门语言里空格是否有意义。</li>
+<li><strong>解析/语法分析(Parsing)</strong><br>这个过程则是把生成的Token转换为抽象语法树(AST)</li>
+<li><strong>代码生成</strong><br>简单来说就是有某种方法可以将var a = 2；的AST转化为一句指令，创建变量a并且赋值。</li>
+</ul>
+<p><strong>summry:</strong><br>任何JS代码在执行前都会被编译。</p>
+<h3 id="理解作用域"><a href="#理解作用域" class="headerlink" title="理解作用域"></a>理解作用域</h3><p>还是以 var a = 2; 为例</p>
+<h4 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h4><p>在编译 var a = 2; 的过程中有3位角色</p>
+<ul>
+<li><strong>引擎</strong><br>负责整个JS程序的编译和执行过程</li>
+<li><strong>编译器</strong><br>负责语法分析和代码生成</li>
+<li><strong>作用域</strong><br>负责收集并维护所有声明的标识符(变量)组成的一系列查询，确定当前执行的代码对啊当前标识符是否有访问权限</li>
+</ul>
+<p>在执行 var a = 2; 时编译器会进行如下处理：</p>
+<ol>
+<li>遇到var a,编译器会询问作用域是否有这个变量在当前作用域，有的话就继续编译，没有的话就在当前作用域声明一个新变量a</li>
+<li>接来下编译器就会生成引擎运行是需要的代码用来处理a = 2这个操作。</li>
+<li>引擎运行时，会询问作用域：当前作用域是否存在变量a，有则使用并赋值，没有则寻找直到全局作用域，最后还是没有则抛出异常</li>
+</ol>
+<p><strong>summry:</strong><br>变量赋值：没有该变量则声明，然后在作用域寻找，找到则赋值</p>
+<h4 id="LHS查询-amp-RHS查询"><a href="#LHS查询-amp-RHS查询" class="headerlink" title="LHS查询&amp;RHS查询"></a>LHS查询&amp;RHS查询</h4><p>LHS查询:找到变量容器本身，从而赋值<br>RHS:获取变量的值<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a)</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+<p>最后一句调用foo 是一个RHS 找到foo的值并返回给我。(…)则意味着foo的值需要被执行，所以foo的值应该是一个函数。</p>
+<p>同时，这里有个隐性的a = 2;当foo(2)执行是，foo函数的参数a，是会被赋值，所以需要一次LHS查询。</p>
+<p>然后console是个对象，log(…)的执行之前也是需要RHS查询, log(a)也是需要一次RHS查询</p>
+<h3 id="作用域嵌套"><a href="#作用域嵌套" class="headerlink" title="作用域嵌套"></a>作用域嵌套</h3><p>很简单，当一个函数或块在另一个函数或块中，就好产生嵌套作用域。</p>
+<p>而当语句执行时，引擎在当前作用域找不到变量时，就会向上查找直到全局作用域。</p>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><p>首先为什么要区分LHS 和 RHS？</p>
+<p>因为在变量还没声明时就使用，这两种查询的行为是不一样的。</p>
+<p>情况一：非严格模式<br>LHS查询失败时，会在全局作用域创建一个具有该名称的变量<br>而RHS失败则会抛出referenceError异常</p>
+<p>情况二：严格模式<br>LHS失败不会创建全局变量了而是抛出referenceError异常<br>RHS失败就会抛出另外一种错误类型：typeError<br>referenceError说明作用域辨别失败，而typeError则说明作用域辨别成功，但是对其的操作是非法或不合理的</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-09-02T14:12:39.000Z" itemprop="dateUpdated">2018-09-02 22:12:39</time>
+</span><br>
+
+
+        
+        心之所向，素履以往
+        
+    </div>
+    
+    <footer>
+        <a href="http://pok888.gitee.io/blog">
+            <img src="/img/avatar.jpg" alt="pok shum">
+            pok shum
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/你不知道的JavaScript/">你不知道的JavaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/读书笔记/">读书笔记</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/&title=《第一章-作用域是什么》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/&title=《第一章-作用域是什么》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第一章-作用域是什么》 — pok&url=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/07/01/react/redux/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">redux</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/05/01/test/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">10分钟搭建hexo博客</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <!-- <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div> -->
+    <div class="bottom">
+        <p><span>pok shum &copy; 2018 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/&title=《第一章-作用域是什么》 — pok&pic=http://pok888.gitee.io/blog/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/&title=《第一章-作用域是什么》 — pok&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《第一章-作用域是什么》 — pok&url=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/&via=http://pok888.gitee.io/blog" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://pok888.gitee.io/blog/2018/06/24/youdtkonwjs/dkjs-chapter-1/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'dont leave me alone';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'hello';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
